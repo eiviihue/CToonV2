@@ -40,6 +40,14 @@ public class ComicDetailController extends HttpServlet {
                     RatingDAO ratingDAO = new RatingDAO();
                     List<model.Rating> ratings = ratingDAO.getRatingsByComicId(comicId);
                     request.setAttribute("ratings", ratings);
+                    // compute average rating from ratings list if available
+                    double avg = 0.0;
+                    if (ratings != null && !ratings.isEmpty()) {
+                        int sum = 0;
+                        for (model.Rating r : ratings) sum += r.getStars();
+                        avg = (double) sum / ratings.size();
+                    }
+                    request.setAttribute("avgRating", String.format("%.2f", avg));
 
                     CommentDAO commentDAO = new CommentDAO();
                     List<model.Comment> comments = commentDAO.getCommentsByComicId(comicId);

@@ -55,7 +55,7 @@ public class CommentDAO {
     public List<Comment> getCommentsByComicId(int comicId) {
         List<Comment> comments = new ArrayList<>();
         try {
-            String query = "SELECT c.* FROM comments c JOIN chapters ch ON c.chapter_id = ch.id WHERE ch.comic_id = ? ORDER BY c.created_at DESC";
+            String query = "SELECT c.*, u.username FROM comments c JOIN chapters ch ON c.chapter_id = ch.id JOIN users u ON c.user_id = u.id WHERE ch.comic_id = ? ORDER BY c.created_at DESC";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, comicId);
             ResultSet rs = stmt.executeQuery();
@@ -67,6 +67,7 @@ public class CommentDAO {
                 comment.setChapterId(rs.getInt("chapter_id"));
                 comment.setContent(rs.getString("content"));
                 comment.setCreatedAt(rs.getString("created_at"));
+                comment.setUsername(rs.getString("username"));
                 comments.add(comment);
             }
         } catch (SQLException e) {
