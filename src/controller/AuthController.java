@@ -6,6 +6,20 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 public class AuthController extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if ("logout".equals(action)) {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            response.sendRedirect("/login");
+            return;
+        }
+        // Default: show login page
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
+    }
     private UserDAO userDAO = new UserDAO();
 
     @Override
@@ -29,9 +43,9 @@ public class AuthController extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("/");
         } else {
-            response.sendRedirect("login.jsp?error=Invalid credentials");
+            response.sendRedirect("/login?error=Invalid credentials");
         }
     }
 
@@ -46,7 +60,7 @@ public class AuthController extends HttpServlet {
         user.setPassword(password);
 
         userDAO.create(user);
-        response.sendRedirect("login.jsp?success=Account created");
+        response.sendRedirect("/login?success=Account created");
     }
 
     private void handleGuestLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -55,19 +69,8 @@ public class AuthController extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.setAttribute("user", guest);
-        response.sendRedirect("home.jsp");
+        response.sendRedirect("/");
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if ("logout".equals(action)) {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                session.invalidate();
-            }
-            response.sendRedirect("login.jsp");
-        }
-    }
+    // Removed stray @Override and comment
 }
