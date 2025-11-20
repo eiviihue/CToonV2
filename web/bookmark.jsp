@@ -9,5 +9,6 @@
 <body>
     <h2>Bookmarked Comics</h2>
     <!-- Bookmarked comics will be listed here -->
+     <h2>Bookmarked Comics</h2>
 </body>
 </html>
