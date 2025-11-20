@@ -1,0 +1,16 @@
+dao\ChapterDAO.class
+controller\HomeController.class
+dao\RatingDAO.class
+util\DBUtil.class
+dao\CommentDAO.class
+controller\ComicDetailController.class
+dao\BookmarkDAO.class
+model\Bookmark.class
+model\Comic.class
+dao\UserDAO.class
+model\Chapter.class
+controller\BrowseController.class
+dao\ComicDAO.class
+model\Rating.class
+model\Comment.class
+model\User.class

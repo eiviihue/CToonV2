@@ -37,4 +37,73 @@ public class ComicDAO {
         }
         return null;
     }
+
+    public List<Comic> getAllComics() {
+        List<Comic> comics = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM comics LIMIT 50";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Comic comic = new Comic();
+                comic.setId(rs.getInt("id"));
+                comic.setTitle(rs.getString("title"));
+                comic.setDescription(rs.getString("description"));
+                comic.setCoverPath(rs.getString("cover_path"));
+                comic.setCategory(rs.getString("category"));
+                comic.setAverageRating(rs.getDouble("average_rating"));
+                comic.setViews(rs.getInt("views"));
+                comics.add(comic);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comics;
+    }
+
+    public List<Comic> getRecentComics() {
+        List<Comic> comics = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM comics ORDER BY id DESC LIMIT 6";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Comic comic = new Comic();
+                comic.setId(rs.getInt("id"));
+                comic.setTitle(rs.getString("title"));
+                comic.setDescription(rs.getString("description"));
+                comic.setCoverPath(rs.getString("cover_path"));
+                comic.setCategory(rs.getString("category"));
+                comic.setAverageRating(rs.getDouble("average_rating"));
+                comic.setViews(rs.getInt("views"));
+                comics.add(comic);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comics;
+    }
+
+    public List<Comic> getTrendingComics() {
+        List<Comic> comics = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM comics ORDER BY views DESC LIMIT 6";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Comic comic = new Comic();
+                comic.setId(rs.getInt("id"));
+                comic.setTitle(rs.getString("title"));
+                comic.setDescription(rs.getString("description"));
+                comic.setCoverPath(rs.getString("cover_path"));
+                comic.setCategory(rs.getString("category"));
+                comic.setAverageRating(rs.getDouble("average_rating"));
+                comic.setViews(rs.getInt("views"));
+                comics.add(comic);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comics;
+    }
 }

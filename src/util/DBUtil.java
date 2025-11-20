@@ -3,9 +3,14 @@ import java.sql.*;
 
 public class DBUtil {
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/ctoon";
+        String url = "jdbc:mysql://shinkansen.proxy.rlwy.net:54128/railway?useSSL=false&serverTimezone=UTC";
         String user = "root";
-        String password = "password";
+        String password = "oRsqyOGrDWrBUBLYeGBxajubkknNXcuu";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return DriverManager.getConnection(url, user, password);
     }
 }
