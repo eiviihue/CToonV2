@@ -50,4 +50,28 @@ public class CommentDAO {
             e.printStackTrace();
         }
     }
+
+    // Fetch comments for a whole comic by joining chapters -> comments
+    public List<Comment> getCommentsByComicId(int comicId) {
+        List<Comment> comments = new ArrayList<>();
+        try {
+            String query = "SELECT c.* FROM comments c JOIN chapters ch ON c.chapter_id = ch.id WHERE ch.comic_id = ? ORDER BY c.created_at DESC";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, comicId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Comment comment = new Comment();
+                comment.setId(rs.getInt("id"));
+                comment.setUserId(rs.getInt("user_id"));
+                comment.setChapterId(rs.getInt("chapter_id"));
+                comment.setContent(rs.getString("content"));
+                comment.setCreatedAt(rs.getString("created_at"));
+                comments.add(comment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comments;
+    }
 }
