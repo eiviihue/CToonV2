@@ -10,7 +10,7 @@
     <!-- Servlets and mappings for clean URLs -->
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.AuthController</servlet-class>
+        <servlet-class>controller.LoginController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
