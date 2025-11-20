@@ -14,28 +14,28 @@
     
     <main>
         <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem; margin: 2rem 0;">
-            <div class="card" style="text-align: center;">
-                <div style="font-size: 8rem; background: #667eea; color: white; padding: 2rem; border-radius: 12px; margin-bottom: 1rem;">
-                    <c:choose>
-                        <c:when test="${not empty comic && not empty comic.coverPath}">
-                            <img src="${comic.coverPath}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;" alt="Cover">
-                        </c:when>
-                        <c:otherwise>🎨</c:otherwise>
-                    </c:choose>
+                <div class="card">
+                    <div style="font-size: 8rem; background: #667eea; color: white; padding: 2rem; border-radius: 12px; margin-bottom: 1rem;">
+                        <c:choose>
+                            <c:when test="${not empty comic && not empty comic.coverPath}">
+                                <img src="${pageContext.request.contextPath}${comic.coverPath}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;" alt="Cover">
+                            </c:when>
+                            <c:otherwise>🎨</c:otherwise>
+                        </c:choose>
+                    </div>
+                    <h3><c:out default="Comic Title" value="${comic.title}"/></h3>
+                    <div style="margin: 1rem 0;">
+                        <span style="background: #667eea; color: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
+                            <c:out default="Manga" value="${comic.status}"/>
+                        </span>
+                    </div>
+                    <p style="color: #666;">Author: <c:out default="Unknown" value="${comic.author}"/></p>
+                    <p style="margin: 1rem 0;">⭐<c:out default="0" value="${comic.averageRating}"/>/5</p>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn" style="flex: 1;">❤️ Bookmark</button>
+                        <button class="btn btn-secondary" style="flex: 1;">⭐ Rate</button>
+                    </div>
                 </div>
-                <h3><c:out default="Comic Title" value="${comic.title}"/></h3>
-                <div style="margin: 1rem 0;">
-                    <span style="background: #667eea; color: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
-                        <c:out default="Fantasy" value="${comic.category}"/>
-                    </span>
-                </div>
-                <p style="color: #666;">Author: Creator Name</p>
-                <p style="margin: 1rem 0;">⭐<c:out default="0" value="${comic.averageRating}"/>/5</p>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button class="btn" style="flex: 1;">❤️ Bookmark</button>
-                    <button class="btn btn-secondary" style="flex: 1;">⭐ Rate</button>
-                </div>
-            </div>
             
             <div>
                 <div class="card">
@@ -50,12 +50,22 @@
                 
                 <div class="card">
                     <h3>📖 Chapters</h3>
-                    <ul style="list-style: none;">
-                        <li style="padding: 0.8rem; border-bottom: 1px solid #e0e0e0;"><a href="${pageContext.request.contextPath}/chapter.jsp?id=45">Chapter 45 - The Final Showdown</a> <span style="float: right; color: #999;">2 days ago</span></li>
-                        <li style="padding: 0.8rem; border-bottom: 1px solid #e0e0e0;"><a href="${pageContext.request.contextPath}/chapter.jsp?id=44">Chapter 44 - Secrets Revealed</a> <span style="float: right; color: #999;">1 week ago</span></li>
-                        <li style="padding: 0.8rem; border-bottom: 1px solid #e0e0e0;"><a href="${pageContext.request.contextPath}/chapter.jsp?id=43">Chapter 43 - Unexpected Turn</a> <span style="float: right; color: #999;">2 weeks ago</span></li>
-                        <li style="padding: 0.8rem;"><a href="${pageContext.request.contextPath}/chapter.jsp?id=42">Chapter 42 - The Beginning</a> <span style="float: right; color: #999;">3 weeks ago</span></li>
-                    </ul>
+                    <c:choose>
+                        <c:when test="${not empty chapters}">
+                            <ul style="list-style: none;">
+                                <c:forEach items="${chapters}" var="chapter">
+                                    <li style="padding: 0.8rem; border-bottom: 1px solid #e0e0e0;">
+                                        <a href="${pageContext.request.contextPath}/chapter?id=${chapter.id}">
+                                            Chapter ${chapter.number} - ${chapter.title}
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </c:when>
+                        <c:otherwise>
+                            <p>No chapters available yet.</p>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
                 <div class="card">

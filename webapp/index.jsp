@@ -26,7 +26,7 @@
                             <div class="card">
                                 <h3>${comic.title}</h3>
                                 <p>${comic.description}</p>
-                                <p><small>Genre: ${comic.category}</small></p>
+                                <p><small>Author: ${comic.author}</small></p>
                                 <p><small>⭐ ${comic.averageRating}/5 | Views: ${comic.views}</small></p>
                                 <a href="${pageContext.request.contextPath}/comic-detail?id=${comic.id}" class="btn">Read Now</a>
                             </div>
@@ -62,7 +62,7 @@
                             <div class="card">
                                 <h3>${comic.title}</h3>
                                 <p>${comic.description}</p>
-                                <p><small>Genre: ${comic.category}</small></p>
+                                <p><small>Author: ${comic.author}</small></p>
                                 <p><small>⭐ ${comic.averageRating}/5 | Views: ${comic.views}</small></p>
                                 <a href="${pageContext.request.contextPath}/comic-detail?id=${comic.id}" class="btn">Check Out</a>
                             </div>

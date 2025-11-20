@@ -4,10 +4,11 @@ public class Comic {
     private int id;
     private String title;
     private String description;
-    private String coverPath;
-    private String category;
-    private double averageRating;
+    private String author;
+    private String status;
     private int views;
+    private int averageRating;
+    private String coverPath;
 
     public int getId() {
         return id;
@@ -33,28 +34,20 @@ public class Comic {
         this.description = description;
     }
 
-    public String getCoverPath() {
-        return coverPath;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setCoverPath(String coverPath) {
-        this.coverPath = coverPath;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public String getCategory() {
-        return category;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public double getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(double averageRating) {
-        this.averageRating = averageRating;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getViews() {
@@ -63,5 +56,21 @@ public class Comic {
 
     public void setViews(int views) {
         this.views = views;
+    }
+
+    public int getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(int averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public String getCoverPath() {
+        return coverPath;
+    }
+
+    public void setCoverPath(String coverPath) {
+        this.coverPath = coverPath;
     }
 }
