@@ -32,6 +32,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ComicController</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
