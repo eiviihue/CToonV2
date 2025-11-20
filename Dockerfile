@@ -7,8 +7,6 @@ COPY pom.xml .
 # Copy source, webapp, and static assets so the in-container Maven build includes JSPs and resources
 COPY src ./src
 COPY webapp ./webapp
-COPY assets ./assets
-
 # Build the WAR (skip tests to speed up builds in CI)
 RUN mvn -B -DskipTests clean package
 
