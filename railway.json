@@ -1,13 +1,13 @@
 {
   "build": {
-    "builder": "Nixpacks"
+    "builder": "Nixpacks",
+    "buildCommand": "mvn -DskipTests clean package"
   },
   "deploy": {
-    "startCommand": "rm -rf /opt/tomcat/webapps/ROOT* && cp target/*.war /opt/tomcat/webapps/ROOT.war && /opt/tomcat/bin/catalina.sh run"
+    "startCommand": "/opt/tomcat/bin/catalina.sh run"
   },
   "env": {
     "JAVA_VERSION": "17",
-    "CATALINA_HOME": "/opt/tomcat",
     "PORT": "8080"
   }
 }
