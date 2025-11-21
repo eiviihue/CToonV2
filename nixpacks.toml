@@ -1,6 +1,5 @@
 # Nixpacks configuration for Railway deployment with Tomcat 10
 [phases.setup]
-includeFiles = ["pom.xml", "src"]
 pkgs = ["jdk17", "maven"]
 cmds = [
   "apt-get update && apt-get install -y curl",
@@ -15,8 +14,7 @@ cmds = ["mvn clean package -DskipTests"]
 
 [phases.start]
 cmds = [
-  "cp target/ctoon-1.0-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war",
-  "/opt/tomcat/bin/catalina.sh run"
+  "cp target/ctoon-1.0-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war && /opt/tomcat/bin/catalina.sh run"
 ]
 
 [variables]
