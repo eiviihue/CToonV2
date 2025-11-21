@@ -40,7 +40,7 @@ public class RatingDAO {
                 ratings.add(rating);
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error fetching ratings by comic ID: " + e.getMessage());
         }
         return ratings;
     }
@@ -68,7 +68,7 @@ public class RatingDAO {
                 in.executeUpdate();
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error adding or updating rating: " + e.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class RatingDAO {
                 return Math.round(avg * 100.0) / 100.0;
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error calculating average rating: " + e.getMessage());
         }
         return 0.0;
     }

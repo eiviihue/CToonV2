@@ -41,7 +41,7 @@ public class CommentDAO {
                 comments.add(comment);
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error fetching comments by chapter ID: " + e.getMessage());
         }
         return comments;
     }
@@ -55,7 +55,7 @@ public class CommentDAO {
             stmt.setString(3, comment.getContent());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error adding comment: " + e.getMessage());
         }
     }
 
@@ -63,7 +63,12 @@ public class CommentDAO {
     public List<Comment> getCommentsByComicId(int comicId) {
         List<Comment> comments = new ArrayList<>();
         try {
-            String query = "SELECT c.*, u.username FROM comments c JOIN chapters ch ON c.chapter_id = ch.id JOIN users u ON c.user_id = u.id WHERE ch.comic_id = ? ORDER BY c.created_at DESC";
+            String query = "SELECT c.*, u.username FROM comments c " +
+                    "JOIN chapters ch ON c.chapter_id = ch.id " +
+                    "JOIN comics co ON ch.comic_id = co.id " +
+                    "JOIN users u ON c.user_id = u.id " +
+                    "WHERE co.id = ? " +
+                    "ORDER BY c.created_at DESC";
             PreparedStatement stmt = getConnection().prepareStatement(query);
             stmt.setInt(1, comicId);
             ResultSet rs = stmt.executeQuery();
@@ -79,7 +84,7 @@ public class CommentDAO {
                 comments.add(comment);
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error fetching comments by comic ID: " + e.getMessage());
         }
         return comments;
     }

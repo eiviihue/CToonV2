@@ -2,216 +2,219 @@
 
 ## Quick Start
 
-### Option 1: Local Deployment (Windows)
+### Local Deployment (Windows)
 ```bash
-./deploy.bat
+./deploy-war.bat
 ```
 
-### Option 2: Local Deployment (macOS/Linux)
+### Railway Deployment
 ```bash
-chmod +x deploy.sh
-./deploy.sh
-```
-
-### Option 3: Railway Deployment
-```bash
-# 1. Connect your GitHub repository to Railway
-# 2. Railway will automatically detect Dockerfile and build/deploy
-
-# Or deploy manually:
 railway login
 railway up
 ```
 
 ---
 
-## Deployment Architecture
+## Environment Variables
 
-The application uses a **multi-stage Docker build** to ensure:
-- ✅ Consistent builds across environments
-- ✅ No WAR file corruption issues
-- ✅ Automatic integrity verification
-- ✅ Smaller final image size
+Set the following environment variables for database connectivity:
 
-### Build Process
-1. **Builder Stage**: Compiles code and creates WAR
-2. **Verification**: Ensures WAR is valid (ZIP format)
-3. **Runtime Stage**: Deploys WAR to Tomcat 9 with JDK 17
+```bash
+DB_HOST=your-database-host
+DB_PORT=3306
+DB_NAME=database_name
+DB_USER=root
+DB_PASSWORD=your-secure-password
+```
+
+**Important**: Never commit credentials to Git. Use Railway's environment variable UI or `.env` files (excluded from Git).
 
 ---
 
-## Prerequisites
+## Database Setup
 
-### For Local Docker Builds
-- Docker Desktop installed and running
-- Maven 3.8+ (automatically detected in Dockerfile)
-- Java 11+ (for local Maven builds)
+### 1. Create Tables
+```sql
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    profile_photo VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-### For Railway Deployment
-- GitHub repository connected to Railway
-- Railway account (free tier available)
-- Optional: Railway CLI installed
+CREATE TABLE comics (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    cover_path VARCHAR(255),
+    category VARCHAR(50),
+    average_rating DOUBLE DEFAULT 0,
+    views INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE chapters (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    comic_id INT NOT NULL,
+    title VARCHAR(255),
+    number INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (comic_id) REFERENCES comics(id) ON DELETE CASCADE
+);
+
+CREATE TABLE pages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    chapter_id INT NOT NULL,
+    page_number INT NOT NULL,
+    image_path VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (chapter_id) REFERENCES chapters(id) ON DELETE CASCADE
+);
+
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    chapter_id INT NOT NULL,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (chapter_id) REFERENCES chapters(id) ON DELETE CASCADE
+);
+
+CREATE TABLE ratings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    comic_id INT NOT NULL,
+    stars INT CHECK (stars >= 1 AND stars <= 5),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_rating (user_id, comic_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (comic_id) REFERENCES comics(id) ON DELETE CASCADE
+);
+
+CREATE TABLE bookmarks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    comic_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_bookmark (user_id, comic_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (comic_id) REFERENCES comics(id) ON DELETE CASCADE
+);
+```
+
+### 2. Populate Database
+```powershell
+python populate_database.py
+```
 
 ---
 
 ## Configuration Files
 
-### `Dockerfile`
-- Multi-stage build for WAR compilation
-- Tomcat 9 with JDK 17
-- Automatic health checks
-- 512MB max heap size (adjustable via `JAVA_OPTS`)
+### `nixpacks.toml`
+- Railway-specific build configuration
+- Installs JDK 17, Maven, and Tomcat
+- Builds WAR file and deploys to Tomcat
 
-### `railway.toml`
-- Railway-specific configuration
-- Deployment settings
-- Environment variables
-
-### `deploy.bat` / `deploy.sh`
-- Automated build and verification scripts
-- Checks WAR integrity before deployment
-- Ready for CI/CD integration
+### `deploy-war.bat`
+- Local build and deployment script
+- Copies WAR to Tomcat webapps directory as ROOT.war
 
 ### `.github/workflows/deploy.yml`
 - GitHub Actions automation
-- Builds and pushes to Docker registry
+- Verifies WAR integrity on build
 - Auto-deploys to Railway on push to `main`
+
+---
+
+## Building and Deployment
+
+### Local Build
+```powershell
+mvn clean package
+```
+
+WAR file output: `target/ctoon-1.0-SNAPSHOT.war`
+
+### Verify WAR Integrity
+```bash
+unzip -t target/ctoon-1.0-SNAPSHOT.war
+```
+
+### Deploy Locally to Tomcat
+```bash
+./deploy-war.bat
+```
+
+### Deploy to Railway
+1. Connect GitHub repository to Railway
+2. Set environment variables in Railway dashboard (DB_HOST, DB_PORT, etc.)
+3. Push to `main` branch - Railway automatically builds and deploys
 
 ---
 
 ## Troubleshooting
 
-### Issue: `zip END header not found`
-**Solution**: Use the multi-stage Dockerfile which builds WAR inside container
-- ✅ Already fixed with `Dockerfile` update
+### Database Connection Failed
+- Verify all `DB_*` environment variables are set
+- Check credentials with: `mysql -h $DB_HOST -u $DB_USER -p`
+- Ensure database user has proper permissions
 
-### Issue: 404 Error on deployed site
-**Ensure**:
-1. WAR is deployed as ROOT application (not in subdirectory)
-2. Check Tomcat logs: `docker logs <container-id>`
-3. Verify database connection settings
+### 404 Error on Application
+- Verify WAR deployed as `ROOT.war` in Tomcat webapps
+- Check: `unzip -l target/ctoon-1.0-SNAPSHOT.war | grep jsp`
+- View Tomcat logs: `docker logs <container-id>`
 
-### Issue: Out of Memory
-**Solution**: Increase heap size in `Dockerfile` or set `JAVA_OPTS`:
+### Asset Files Not Found
+- Ensure `src/main/webapp/assets/` exists with subdirectories
+- Verify assets included in WAR: `unzip -l target/ctoon-1.0-SNAPSHOT.war | grep assets`
+
+### Out of Memory Errors
+Set JVM heap size:
 ```bash
-docker run -e JAVA_OPTS="-Xmx1g -Xms512m" ctoon:latest
+export JAVA_OPTS="-Xmx1g -Xms512m"
 ```
 
 ---
 
-## Database Configuration
+## Health Checks
 
-Set environment variables for database connection:
+View application status:
 ```bash
-docker run \
-  -e DB_HOST=your-db-host \
-  -e DB_PORT=3306 \
-  -e DB_NAME=ctoon \
-  -e DB_USER=root \
-  -e DB_PASSWORD=password \
-  ctoon:latest
-```
-
-Or update `src/main/java/util/DBUtil.java` with connection details.
-
----
-
-## Performance Tuning
-
-### JVM Settings (in Dockerfile)
-- `Xmx512m`: Maximum heap size (increase for large datasets)
-- `Xms256m`: Initial heap size
-- `-Djava.awt.headless=true`: Disable GUI for server mode
-
-### Tomcat Settings
-- Connection pool size in `web.xml`
-- Thread pool configuration in `server.xml`
-
----
-
-## Monitoring & Health Checks
-
-The deployment includes automatic health checks:
-- **Interval**: 30 seconds
-- **Timeout**: 10 seconds
-- **Start Period**: 60 seconds (time before first check)
-- **Retry**: 5 failed checks before restart
-
-View health status:
-```bash
-docker ps  # Shows health status in STATUS column
-docker inspect <container-id>  # Detailed health info
+curl http://localhost:8080/ctoon-1.0-SNAPSHOT/health
+curl http://localhost:8080/ctoon-1.0-SNAPSHOT/ready
 ```
 
 ---
 
-## Rollback
+## Project Structure
 
-To rollback to a previous version:
-```bash
-# Railway dashboard: Select previous deployment
-# Or local Docker:
-docker pull ctoon:previous-tag
-docker run -p 8080:8080 ctoon:previous-tag
+```
+src/main/java/
+  ├── controller/    # HTTP request handlers
+  ├── dao/          # Database access objects
+  ├── model/        # Data models
+  └── util/         # Utilities (DB, servlets)
+src/main/webapp/
+  ├── assets/       # Comics and covers
+  ├── css/          # Stylesheets
+  ├── js/           # JavaScript
+  ├── *.jsp         # Web pages
+  └── WEB-INF/
+      └── web.xml   # Deployment descriptor
+pom.xml             # Maven configuration
 ```
 
 ---
 
 ## Support
 
-For deployment issues:
-1. Check `Dockerfile` and `railway.toml` configuration
-2. Review Tomcat logs: `docker logs <container-id>`
-3. Verify WAR file integrity: `unzip -t target/ctoon-1.0-SNAPSHOT.war`
-4. Test locally before pushing to production
-
----
-
-# Deployment Instructions
-
-## 1. Build the Project
-
-Run the following command in the project root directory:
-
-```powershell
-mvn clean package
-```
-
-The generated WAR file will be located at:
-```
-target/ctoon-1.0-SNAPSHOT.war
-```
-
-## 2. Deploy to Tomcat
-
-1. Copy the WAR file from `target/ctoon-1.0-SNAPSHOT.war` to your Tomcat `webapps` directory.
-2. Start Tomcat. The application will be deployed automatically.
-
-## 3. Access the Application
-
-Open your browser and go to:
-```
-http://localhost:8080/ctoon-1.0-SNAPSHOT/
-```
-
-## 4. Database Setup
-
-To populate the database, run:
-```powershell
-python populate_database.py
-```
-
-## 5. Project Structure Reference
-
-```
-src/main/java/controller/         # Controllers
-src/main/java/dao/               # Data Access Objects
-src/main/java/model/             # Models
-src/main/java/util/              # Utilities
-src/main/resources/              # Resources
-src/main/webapp/                 # Web assets (JSP, CSS, JS, images)
-src/main/webapp/WEB-INF/web.xml  # Web application descriptor
-pom.xml                          # Maven build file
-README.md                        # Project documentation
-DEPLOYMENT.md                    # Deployment instructions
-```
+For issues:
+1. Check `nixpacks.toml` and Railway build logs
+2. Verify WAR file integrity
+3. Test database connectivity
+4. Review application logs
+5. Ensure all environment variables are set

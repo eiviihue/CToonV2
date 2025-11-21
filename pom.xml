@@ -55,7 +55,7 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <warSourceDirectory>src/main/webapp</warSourceDirectory>
-                        <warName>ROOT</warName>
+                    <warName>ctoon-1.0-SNAPSHOT</warName>
                 </configuration>
             </plugin>
         </plugins>

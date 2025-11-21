@@ -40,7 +40,7 @@ public class ChapterDAO {
                 return chapter;
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error fetching chapter by ID: " + e.getMessage());
         }
         return null;
     }
@@ -61,7 +61,7 @@ public class ChapterDAO {
                 chapters.add(chapter);
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error fetching chapters by comic ID: " + e.getMessage());
         }
         return chapters;
     }
@@ -83,7 +83,7 @@ public class ChapterDAO {
                 pages.add(page);
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error fetching pages by chapter ID: " + e.getMessage());
         }
         return pages;
     }

@@ -12,9 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import dao.ChapterDAO;
 import dao.ComicDAO;
-import dao.RatingDAO;
 import dao.CommentDAO;
-import dao.UserDAO;
+import dao.RatingDAO;
 import model.Chapter;
 import model.Comic;
 
@@ -45,7 +44,8 @@ public class ComicDetailController extends HttpServlet {
                     double avg = 0.0;
                     if (ratings != null && !ratings.isEmpty()) {
                         int sum = 0;
-                        for (model.Rating r : ratings) sum += r.getStars();
+                        for (model.Rating r : ratings)
+                            sum += r.getStars();
                         avg = (double) sum / ratings.size();
                     }
                     request.setAttribute("avgRating", String.format("%.2f", avg));
@@ -55,7 +55,7 @@ public class ComicDetailController extends HttpServlet {
                     request.setAttribute("comments", comments);
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                System.err.println("Error parsing comic ID: " + e.getMessage());
             }
         }
         request.getRequestDispatcher("/comic.jsp").forward(request, response);
@@ -90,7 +90,7 @@ public class ComicDetailController extends HttpServlet {
                 rating.setStars(stars);
                 ratingDAO.addOrUpdateRating(rating);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                System.err.println("Error parsing rating data: " + e.getMessage());
             }
             response.sendRedirect(request.getContextPath() + "/comic-detail?id=" + request.getParameter("comicId"));
             return;
@@ -110,7 +110,7 @@ public class ComicDetailController extends HttpServlet {
                 comment.setContent(content);
                 commentDAO.addComment(comment);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                System.err.println("Error parsing comment data: " + e.getMessage());
             }
             response.sendRedirect(request.getContextPath() + "/comic-detail?id=" + request.getParameter("comicId"));
             return;

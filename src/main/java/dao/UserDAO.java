@@ -40,7 +40,7 @@ public class UserDAO {
                 return user;
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error authenticating user: " + e.getMessage());
         }
         return null;
     }
@@ -61,7 +61,7 @@ public class UserDAO {
                 return user;
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error fetching user by ID: " + e.getMessage());
         }
         return null;
     }
@@ -75,7 +75,7 @@ public class UserDAO {
             stmt.setString(3, user.getPassword());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error creating user: " + e.getMessage());
         }
     }
 
@@ -89,7 +89,7 @@ public class UserDAO {
             stmt.setInt(4, user.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error updating user: " + e.getMessage());
         }
     }
 
@@ -100,7 +100,7 @@ public class UserDAO {
             stmt.setInt(1, userId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error deleting user: " + e.getMessage());
         }
     }
 }

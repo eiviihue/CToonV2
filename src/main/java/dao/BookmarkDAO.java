@@ -32,7 +32,7 @@ public class BookmarkDAO {
                 return rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error checking bookmark: " + e.getMessage());
         }
         return false;
     }
@@ -45,7 +45,7 @@ public class BookmarkDAO {
             stmt.setInt(2, bookmark.getComicId());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error adding bookmark: " + e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class BookmarkDAO {
             stmt.setInt(2, comicId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error removing bookmark: " + e.getMessage());
         }
     }
 }

@@ -11,13 +11,13 @@ import mysql.connector
 from pathlib import Path
 from mysql.connector import errorcode
 
-# Database Configuration
+# Database Configuration - use environment variables for security
 DB_CONFIG = {
-    'host': 'shinkansen.proxy.rlwy.net',
-    'port': 54128,
-    'user': 'root',
-    'password': 'oRsqyOGrDWrBUBLYeGBxajubkknNXcuu',
-    'database': 'railway'
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'port': int(os.getenv('DB_PORT', 3306)),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', ''),
+    'database': os.getenv('DB_NAME', 'ctoon')
 }
 
 # Asset paths

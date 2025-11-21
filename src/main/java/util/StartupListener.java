@@ -27,7 +27,6 @@ public class StartupListener implements ServletContextListener {
             }
         } catch (Exception e) {
             System.err.println("[StartupListener] Error during startup: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -46,7 +45,6 @@ public class StartupListener implements ServletContextListener {
                     System.out.println("[StartupListener] Deregistered JDBC driver: " + driver);
                 } catch (SQLException ex) {
                     System.err.println("[StartupListener] Error deregistering driver: " + ex.getMessage());
-                    ex.printStackTrace();
                 }
             } else {
                 System.out
@@ -65,10 +63,12 @@ public class StartupListener implements ServletContextListener {
             // MySQL driver not present or different version; ignore
             System.out.println(
                     "[StartupListener] MySQL AbandonedConnectionCleanupThread class not found: " + cnfe.getMessage());
-        } catch (Throwable t) {
+        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException ex) {
             System.err.println(
-                    "[StartupListener] Error shutting down AbandonedConnectionCleanupThread: " + t.getMessage());
-            t.printStackTrace();
+                    "[StartupListener] Error shutting down AbandonedConnectionCleanupThread: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println(
+                    "[StartupListener] Error shutting down AbandonedConnectionCleanupThread: " + ex.getMessage());
         }
     }
 }
