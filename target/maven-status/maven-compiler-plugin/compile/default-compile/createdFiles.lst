@@ -2,6 +2,7 @@ dao\ChapterDAO.class
 controller\HomeController.class
 dao\RatingDAO.class
 model\Page.class
+controller\UserController.class
 util\DBUtil.class
 dao\CommentDAO.class
 controller\ComicDetailController.class

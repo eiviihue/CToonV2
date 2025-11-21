@@ -1,4 +1,5 @@
 package dao;
+
 import model.Rating;
 import java.sql.*;
 import java.util.ArrayList;
@@ -81,13 +82,6 @@ public class RatingDAO {
         return 0.0;
     }
 }
-package dao;
-import model.Rating;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
-public class RatingDAO {
     private Connection connection;
 
     public RatingDAO() {

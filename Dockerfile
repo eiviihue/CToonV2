@@ -1,26 +1,20 @@
-# Multi-stage build: build WAR with Maven (Java 17), then copy into Tomcat
-FROM maven:3.9.5-eclipse-temurin-17 AS builder
-WORKDIR /workspace
-
-# Copy only what we need for a Maven build to leverage layer caching
-COPY pom.xml .
-# Copy source, webapp, and static assets so the in-container Maven build includes JSPs and resources
-COPY src ./src
-COPY webapp ./webapp
-# Build the WAR (skip tests to speed up builds in CI)
-RUN mvn -B -DskipTests clean package
-
+# Single stage: uses pre-built WAR from local build
 FROM tomcat:9.0-jdk17-temurin
 WORKDIR /usr/local/tomcat
 
 # Remove default ROOT app
 RUN rm -rf webapps/ROOT
 
-# Copy the built WAR from the builder stage into Tomcat's webapps as ROOT.war
-COPY --from=builder /workspace/target/*.war webapps/ROOT.war
+# Copy the pre-built WAR file into Tomcat's webapps as ROOT.war
+# Expects WAR to be at ./target/ctoon-1.0-SNAPSHOT.war (built locally via Maven)
+COPY target/ctoon-1.0-SNAPSHOT.war webapps/ROOT.war
 
 # Expose default Tomcat port
 EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:8080/ || exit 1
 
 # Start Tomcat
 CMD ["catalina.sh", "run"]
