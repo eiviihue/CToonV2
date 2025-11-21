@@ -25,6 +25,17 @@ public class StartupListener implements ServletContextListener {
                 System.out.println("[StartupListener] index.jsp exists: " + index.exists() + " (path="
                         + index.getAbsolutePath() + ")");
             }
+            
+            // Test database connection
+            System.out.println("[StartupListener] Testing database connection...");
+            try {
+                java.sql.Connection conn = DBUtil.getConnection();
+                conn.close();
+                System.out.println("[StartupListener] Database connection successful");
+            } catch (Exception dbEx) {
+                System.err.println("[StartupListener] Database connection failed: " + dbEx.getMessage());
+                // Don't fail startup - app can still serve static content
+            }
         } catch (Exception e) {
             System.err.println("[StartupListener] Error during startup: " + e.getMessage());
         }
