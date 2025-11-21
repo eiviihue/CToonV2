@@ -21,9 +21,11 @@ import model.User;
 public class UserController extends HttpServlet {
     private UserDAO userDAO;
 
-    @Override
-    public void init() throws ServletException {
-        userDAO = new UserDAO();
+    // lazy-init to avoid opening DB connection during servlet startup
+    private void ensureUserDAO() {
+        if (this.userDAO == null) {
+            this.userDAO = new UserDAO();
+        }
     }
 
     @Override
@@ -92,6 +94,7 @@ public class UserController extends HttpServlet {
      */
     private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
+        ensureUserDAO();
 
         try {
             String username = request.getParameter("username");
@@ -126,6 +129,7 @@ public class UserController extends HttpServlet {
      */
     private void loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
+        ensureUserDAO();
 
         try {
             String username = request.getParameter("username");
@@ -186,6 +190,7 @@ public class UserController extends HttpServlet {
      */
     private void getUserProfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
+        ensureUserDAO();
 
         try {
             HttpSession session = request.getSession(false);
@@ -214,6 +219,7 @@ public class UserController extends HttpServlet {
      */
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
+        ensureUserDAO();
 
         try {
             HttpSession session = request.getSession(false);
@@ -264,6 +270,7 @@ public class UserController extends HttpServlet {
      */
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
+        ensureUserDAO();
 
         try {
             HttpSession session = request.getSession(false);
