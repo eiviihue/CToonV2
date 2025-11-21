@@ -20,3 +20,13 @@ coverage
 .dockerignore
 README.md
 *.md
+/target/
+*.war
+*.log
+/.idea/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+.env
