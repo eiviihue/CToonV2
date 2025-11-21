@@ -9,4 +9,16 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <!-- Register startup listener and health servlet for improved diagnostics -->
+    <listener>
+        <listener-class>util.StartupListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>HealthServlet</servlet-name>
+        <servlet-class>util.HealthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HealthServlet</servlet-name>
+        <url-pattern>/health</url-pattern>
+    </servlet-mapping>
 </web-app>

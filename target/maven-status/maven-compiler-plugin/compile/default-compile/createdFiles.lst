@@ -4,7 +4,9 @@ dao\RatingDAO.class
 model\Page.class
 controller\UserController.class
 util\DBUtil.class
+util\HealthServlet.class
 dao\CommentDAO.class
+util\StartupListener.class
 controller\ComicDetailController.class
 dao\BookmarkDAO.class
 model\Bookmark.class

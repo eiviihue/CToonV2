@@ -37,7 +37,7 @@ EXPOSE 8080
 
 # Health check with retry logic
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=5 \
-    CMD curl -sf http://localhost:8080/ > /dev/null || exit 1
+    CMD curl -sf http://localhost:8080/health > /dev/null || exit 1
 
 # Start Tomcat in foreground mode (important for Docker)
 CMD ["catalina.sh", "run"]

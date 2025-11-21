@@ -6,7 +6,7 @@ dockerfile = "Dockerfile.multistage"
 [deploy]
 # Railway deployment configuration
 startCommand = "catalina.sh run"
-healthcheckPath = "/"
+healthcheckPath = "/health"
 healthcheckInterval = 30000
 healthcheckTimeout = 10000
 
