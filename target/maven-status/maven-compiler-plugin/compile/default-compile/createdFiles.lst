@@ -15,6 +15,7 @@ dao\UserDAO.class
 model\Chapter.class
 controller\BrowseController.class
 controller\ChapterViewController.class
+util\ReadyServlet.class
 dao\ComicDAO.class
 model\Rating.class
 model\Comment.class
