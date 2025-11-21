@@ -1,5 +1,3 @@
-[# Nixpacks configuration for Railway deployment with Tomcat 9]
-# Using Tomcat 9 keeps compatibility with `javax.servlet` APIs used in this project
 [phases.setup]
 pkgs = ["jdk17", "maven"]
 cmds = [
