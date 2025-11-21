@@ -15,7 +15,7 @@ cmds = [
 ]
 
 [phases.runtime]
-cmd = "cp target/ctoon-1.0-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war && /opt/tomcat/bin/catalina.sh run"
+cmd = "rm -rf /opt/tomcat/webapps/ROOT /opt/tomcat/webapps/ROOT.war && cp target/ctoon-1.0-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war && /opt/tomcat/bin/catalina.sh run"
 
 [variables]
 JAVA_VERSION = "17"
