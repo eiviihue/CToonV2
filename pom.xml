@@ -55,6 +55,7 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <warSourceDirectory>src/main/webapp</warSourceDirectory>
+                        <warName>ROOT</warName>
                 </configuration>
             </plugin>
         </plugins>
