@@ -20,16 +20,11 @@ public class DBUtil {
     }
 
     private static String getDbUrl() {
-        String host = System.getenv("DB_HOST");
-        String port = System.getenv("DB_PORT");
-        String database = System.getenv("DB_NAME");
-
-        if (host == null || port == null || database == null) {
-            throw new RuntimeException(
-                    "Database configuration incomplete. Set DB_HOST, DB_PORT, and DB_NAME environment variables.");
+        String url = System.getenv("DB_URL");
+        if (url == null) {
+            throw new RuntimeException("Database URL not configured. Set DB_URL environment variable.");
         }
-        return "jdbc:mysql://" + host + ":" + port + "/" + database
-                + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+        return url;
     }
 
     private static String getDbUser() {
