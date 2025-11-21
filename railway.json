@@ -3,7 +3,7 @@
     "builder": "Nixpacks"
   },
   "deploy": {
-    "startCommand": "cp target/ROOT.war /opt/tomcat/webapps/ROOT.war && /opt/tomcat/bin/catalina.sh run"
+    "startCommand": "rm -rf /opt/tomcat/webapps/ROOT* && cp target/ROOT.war /opt/tomcat/webapps/ROOT.war && /opt/tomcat/bin/catalina.sh run"
   },
   "env": {
     "JAVA_VERSION": "17",
