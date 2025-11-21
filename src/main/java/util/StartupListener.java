@@ -25,7 +25,7 @@ public class StartupListener implements ServletContextListener {
                 System.out.println("[StartupListener] index.jsp exists: " + index.exists() + " (path="
                         + index.getAbsolutePath() + ")");
             }
-            
+
             // Test database connection
             System.out.println("[StartupListener] Testing database connection...");
             try {
