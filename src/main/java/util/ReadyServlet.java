@@ -8,17 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/health")
-public class HealthServlet extends HttpServlet {
+@WebServlet("/ready")
+public class ReadyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Basic logging for health checks - helps detect requests in logs
-        String remoteAddr = req.getRemoteAddr();
-        String method = req.getMethod();
-        System.out.println("[HealthServlet] " + method + " request from " + remoteAddr);
+        System.out.println("[ReadyServlet] GET request from " + req.getRemoteAddr());
         resp.setContentType("application/json");
         resp.setStatus(HttpServletResponse.SC_OK);
-        resp.getWriter().write("{\"status\":\"ok\"}");
+        resp.getWriter().write("{\"ready\":true}");
         resp.getWriter().flush();
     }
 }
