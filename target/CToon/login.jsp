@@ -44,7 +44,7 @@
     <%@ include file="navbar.jsp" %>
     
     <main>
-        <h2>🔐 Login to CToon</h2>
+        <h2>Login to CToon</h2>
         <p style="text-align: center; color: #666; margin-bottom: 2rem;">Welcome back! Please login to your account</p>
         
         <% 
@@ -65,11 +65,11 @@
         <form action="${pageContext.request.contextPath}/LoginServlet" method="post">
             <input type="hidden" name="action" value="login" />
             <div class="form-group">
-                <label for="username">👤 Username or Email</label>
+                <label for="username">Username or Email</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username or email" required autocomplete="username">
             </div>
             <div class="form-group">
-                <label for="password">🔑 Password</label>
+                <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
             </div>
             
@@ -94,7 +94,7 @@
     </main>
     
     <footer>
-        <button id="theme-toggle">🌙 Dark Mode</button>
+        <button id="theme-toggle">Dark Mode</button>
     </footer>
 </body>
 </html>

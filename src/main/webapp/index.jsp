@@ -38,22 +38,22 @@
         <p>Discover amazing comics and manga from creators around the world</p>
         
         <section id="recent-comics">
-            <h2>📚 Recently Updated</h2>
+            <h2>Recently Updated</h2>
             <div class="cards-grid">
                 <c:choose>
                     <c:when test="${not empty recentComics}">
                         <c:forEach items="${recentComics}" var="comic" varStatus="status">
                             <div class="card">
-                                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold;">
                                     <c:choose>
-                                        <c:when test="${status.count % 3 == 1}">📖</c:when>
-                                        <c:when test="${status.count % 3 == 2}">🌙</c:when>
-                                        <c:otherwise>⚡</c:otherwise>
+                                        <c:when test="${status.count % 3 == 1}">BOOK</c:when>
+                                        <c:when test="${status.count % 3 == 2}">NIGHT</c:when>
+                                        <c:otherwise>ACTION</c:otherwise>
                                     </c:choose>
                                 </div>
                                 <h3><c:out value="${comic.title}"/></h3>
                                 <p><c:out value="${comic.description}"/></p>
-                                <p style="font-size: 0.85rem; color: #aaa; margin: 0.5rem 0;">✓ <c:out value="${comic.views}"/> views • 🔖 <c:out value="${comic.bookmarks}"/> bookmarks</p>
+                                <p style="font-size: 0.85rem; color: #aaa; margin: 0.5rem 0;"><c:out value="${comic.views}"/> views • <c:out value="${comic.bookmarks}"/> bookmarks</p>
                                 <span class="badge badge-primary">Featured</span>
                                 <div style="margin-top: 0.8rem;">
                                     <a href="${pageContext.request.contextPath}/comic-detail?id=${comic.id}" class="btn" style="display: inline-block; width: auto;">Read Now →</a>
@@ -63,7 +63,7 @@
                     </c:when>
                     <c:otherwise>
                         <div class="card">
-                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">📖</div>
+                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold;">BOOK</div>
                             <h3>Sample Comic 1</h3>
                             <p>An exciting adventure awaits...</p>
                             <span class="badge badge-primary">Action</span>
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         <div class="card">
-                            <div style="background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">🌙</div>
+                            <div style="background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold;">NIGHT</div>
                             <h3>Sample Comic 2</h3>
                             <p>A mysterious tale unfolds...</p>
                             <span class="badge badge-primary">Mystery</span>
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="card">
-                            <div style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">⚡</div>
+                            <div style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold;">ACTION</div>
                             <h3>Sample Comic 3</h3>
                             <p>Epic battles and dramatic twists...</p>
                             <span class="badge badge-success">Fantasy</span>
@@ -95,7 +95,7 @@
         </section>
 
         <section id="trending">
-            <h2>🔥 Trending Now</h2>
+            <h2>Trending Now</h2>
             <div class="cards-grid">
                 <c:choose>
                     <c:when test="${not empty trendingComics}">
@@ -104,11 +104,11 @@
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                     <div>
                                         <h3 style="margin: 0;"><c:out value="${comic.title}"/></h3>
-                                        <span class="badge badge-danger">🔥 #${status.count}</span>
+                                        <span class="badge badge-danger">#${status.count}</span>
                                     </div>
                                 </div>
                                 <p><c:out value="${comic.description}"/></p>
-                                <p style="font-size: 0.9rem; color: #888;">⭐<c:out value="${comic.averageRating}"/>/5 (<c:out value="${comic.reviews}"/> reviews)</p>
+                                <p style="font-size: 0.9rem; color: #888;"><c:out value="${comic.averageRating}"/>/5 (<c:out value="${comic.reviews}"/> reviews)</p>
                                 <a href="${pageContext.request.contextPath}/comic-detail?id=${comic.id}" class="btn" style="display: inline-block; width: auto;">Check Out →</a>
                             </div>
                         </c:forEach>
@@ -118,33 +118,33 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                 <div>
                                     <h3 style="margin: 0;">Trending Comic 1</h3>
-                                    <span class="badge badge-danger">🔥 #1</span>
+                                    <span class="badge badge-danger">#1</span>
                                 </div>
                             </div>
                             <p>Millions of views this week!</p>
-                            <p style="font-size: 0.9rem; color: #888;">⭐⭐⭐⭐⭐ 4.8/5 (2,340 reviews)</p>
+                            <p style="font-size: 0.9rem; color: #888;">4.8/5 (2,340 reviews)</p>
                             <a href="${pageContext.request.contextPath}/comic.jsp" class="btn" style="display: inline-block; width: auto;">Check Out →</a>
                         </div>
                         <div class="card">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                 <div>
                                     <h3 style="margin: 0;">Trending Comic 2</h3>
-                                    <span class="badge badge-primary">🔥 #2</span>
+                                    <span class="badge badge-primary">#2</span>
                                 </div>
                             </div>
                             <p>Everyone's talking about this...</p>
-                            <p style="font-size: 0.9rem; color: #888;">⭐⭐⭐⭐⭐ 4.7/5 (1,890 reviews)</p>
+                            <p style="font-size: 0.9rem; color: #888;">4.7/5 (1,890 reviews)</p>
                             <a href="${pageContext.request.contextPath}/comic.jsp" class="btn" style="display: inline-block; width: auto;">Check Out →</a>
                         </div>
                         <div class="card">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                 <div>
                                     <h3 style="margin: 0;">Trending Comic 3</h3>
-                                    <span class="badge badge-success">🔥 #3</span>
+                                    <span class="badge badge-success">#3</span>
                                 </div>
                             </div>
                             <p>Don't miss out on the hype!</p>
-                            <p style="font-size: 0.9rem; color: #888;">⭐⭐⭐⭐ 4.6/5 (1,560 reviews)</p>
+                            <p style="font-size: 0.9rem; color: #888;">4.6/5 (1,560 reviews)</p>
                             <a href="${pageContext.request.contextPath}/comic.jsp" class="btn" style="display: inline-block; width: auto;">Check Out →</a>
                         </div>
                     </c:otherwise>
@@ -154,7 +154,7 @@
     </main>
     
     <footer>
-        <button id="theme-toggle">🌙 Dark Mode</button>
+        <button id="theme-toggle">Dark Mode</button>
     </footer>
 </body>
 </html>

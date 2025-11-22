@@ -57,12 +57,8 @@
         <!-- Comments Section -->
         <div class="comments-section">
             <h3>Comments</h3>
-            <div class="comment-form">
-                <textarea placeholder="Share your thoughts..."></textarea>
-                <button class="btn-primary">Post Comment</button>
-            </div>
             <div class="comments-list">
-                <p>No comments yet. Be the first to comment!</p>
+                <p>No comments available. Be the first to read this chapter!</p>
             </div>
         </div>
     </div>
@@ -164,28 +160,6 @@
             margin-bottom: 20px;
         }
 
-        .comment-form {
-            margin-bottom: 30px;
-        }
-
-        .comment-form textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            background: var(--bg-primary);
-            color: var(--text-color);
-            font-family: inherit;
-            margin-bottom: 10px;
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .comment-form textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
         .comments-list {
             margin-top: 20px;
         }
@@ -237,7 +211,9 @@
     </main>
     
     <footer>
-        <button id="theme-toggle">🌙 Dark Mode</button>
+    <footer>
+        <button id="theme-toggle">Dark Mode</button>
+    </footer>
     </footer>
 </body>
 </html>

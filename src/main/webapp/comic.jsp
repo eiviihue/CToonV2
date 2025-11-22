@@ -69,48 +69,20 @@
                 </div>
 
                 <div class="card">
-                    <h3>💬 Comments</h3>
+                    <h3>Comments</h3>
                     <c:choose>
-                        <c:when test="${not empty chapters}">
-                            <c:choose>
-                                <c:when test="${not empty sessionScope.user}">
-                                    <form method="post" action="${pageContext.request.contextPath}/comic-detail" style="margin-bottom: 1rem;">
-                                        <input type="hidden" name="action" value="addComment" />
-                                        <input type="hidden" name="comicId" value="${comic.id}" />
-                                        <label for="chapterId">Comment for chapter:</label>
-                                        <select name="chapterId" id="chapterId" style="display:block; margin:0.5rem 0 0.75rem; padding:0.6rem; border-radius:8px;">
-                                            <c:forEach items="${chapters}" var="ch">
-                                                <option value="${ch.id}">Chapter ${ch.number} - ${ch.title}</option>
-                                            </c:forEach>
-                                        </select>
-                                        <textarea name="content" placeholder="Add a comment..." style="width:100%; min-height:100px; padding:0.8rem; border-radius:8px; border:1px solid #e0e0e0;"></textarea>
-                                        <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
-                                            <button class="btn" type="submit">Post Comment</button>
-                                        </div>
-                                    </form>
-                                </c:when>
-                                <c:otherwise>
-                                    <p>Please <a href="${pageContext.request.contextPath}/login.jsp">login</a> to comment.</p>
-                                </c:otherwise>
-                            </c:choose>
+                        <c:when test="${not empty comments}">
+                            <c:forEach items="${comments}" var="comment">
+                                <div style="margin-bottom:1.2rem;">
+                                    <strong>User</strong> <span style="color:#999; font-size:0.9rem;">${comment.createdAt}</span>
+                                    <p style="margin-top:0.4rem;">${comment.content}</p>
+                                </div>
+                            </c:forEach>
                         </c:when>
+                        <c:otherwise>
+                            <p>No comments available yet.</p>
+                        </c:otherwise>
                     </c:choose>
-
-                    <div style="margin-top: 1.5rem; border-top: 1px solid #e0e0e0; padding-top: 1rem;">
-                        <c:choose>
-                            <c:when test="${not empty comments}">
-                                <c:forEach items="${comments}" var="comment">
-                                    <div style="margin-bottom:1.2rem;">
-                                        <strong>User</strong> <span style="color:#999; font-size:0.9rem;">${comment.createdAt}</span>
-                                        <p style="margin-top:0.4rem;">${comment.content}</p>
-                                    </div>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <p>No comments yet. Be the first to comment!</p>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
                 </div>
 
                 <div class="card">
