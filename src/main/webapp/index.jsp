@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                                 <p><c:out value="${comic.description}"/></p>
-                                <p style="font-size: 0.9rem; color: #888;"><c:out value="${comic.averageRating}"/>/5 (<c:out value="${comic.reviews}"/> reviews)</p>
+                                <p style="font-size: 0.9rem; color: #888;"><c:out value="${comic.averageRating}"/>/5</p>
                                 <a href="${pageContext.request.contextPath}/comic-detail?id=${comic.id}" class="btn" style="display: inline-block; width: auto;">Check Out →</a>
                             </div>
                         </c:forEach>

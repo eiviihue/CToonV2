@@ -9,6 +9,7 @@ public class Comic {
     private double averageRating;
     private int views;
     private int bookmarks;
+    private int reviews;
 
     public int getId() {
         return id;
@@ -72,5 +73,13 @@ public class Comic {
 
     public void setBookmarks(int bookmarks) {
         this.bookmarks = bookmarks;
+    }
+
+    public int getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(int reviews) {
+        this.reviews = reviews;
     }
 }
