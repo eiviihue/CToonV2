@@ -1,10 +1,12 @@
 {
   "build": {
-    "builder": "Nixpacks",
+    "builder": "NIXPACKS",
     "buildCommand": "mvn -DskipTests clean package"
   },
   "deploy": {
-    "startCommand": "/opt/tomcat/bin/catalina.sh run"
+    "startCommand": "java -jar target/dependency/webapp-runner.jar --port $PORT target/*.war",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
   },
   "env": {
     "JAVA_VERSION": "17",

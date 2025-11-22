@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <display-name>CToon</display-name>
+    
+    <!-- Welcome file list for index requests -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <!-- Register startup listener and health servlet for improved diagnostics -->
+    <listener>
+        <listener-class>util.StartupListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>HealthServlet</servlet-name>
+        <servlet-class>util.HealthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HealthServlet</servlet-name>
+        <url-pattern>/health</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ReadyServlet</servlet-name>
+        <servlet-class>util.ReadyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReadyServlet</servlet-name>
+        <url-pattern>/ready</url-pattern>
+    </servlet-mapping>
+</web-app>

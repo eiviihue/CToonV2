@@ -1,22 +1,16 @@
+providers = ["java"]
+
 [phases.setup]
-pkgs = ["jdk17", "maven"]
-cmds = [
-  "apt-get update && apt-get install -y curl",
-  "mkdir -p /opt/tomcat",
-  "curl -L -o /tmp/tomcat.tar.gz https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.84/bin/apache-tomcat-9.0.84.tar.gz",
-  "tar -xzf /tmp/tomcat.tar.gz -C /opt/tomcat --strip-components=1",
-  "rm /tmp/tomcat.tar.gz"
-]
+nixPkgs = ["maven", "jdk17"]
 
 [phases.build]
-cmds = [
-  "mvn -v",
-  "mvn clean package -DskipTests -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8"
-]
+cmds = ["mvn clean package -DskipTests"]
 
 [phases.runtime]
-cmd = "rm -rf /opt/tomcat/webapps/ROOT /opt/tomcat/webapps/ROOT.war && cp target/root.war /opt/tomcat/webapps/ROOT.war && /opt/tomcat/bin/catalina.sh run"
+cmd = "java -jar target/dependency/webapp-runner.jar --port $PORT target/*.war"
+
+[start]
+cmd = "java -jar target/dependency/webapp-runner.jar --port $PORT target/*.war"
 
 [variables]
 JAVA_VERSION = "17"
-CATALINA_HOME = "/opt/tomcat"

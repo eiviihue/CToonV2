@@ -1,1 +1,1 @@
-web: /opt/tomcat/bin/catalina.sh run
+web: java -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
