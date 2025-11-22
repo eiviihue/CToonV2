@@ -24,13 +24,18 @@
             <c:when test="${not empty searchResults}">
                 <div class="cards-grid">
                     <c:forEach items="${searchResults}" var="comic">
-                        <div class="card">
-                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 120px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold;">
-                                📚
-                            </div>
-                            <h3><c:out value="${comic.title}" /></h3>
-                            <p><c:out value="${comic.description}" default="No description available." /></p>
-                            <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="card" style="padding: 0; overflow: hidden;">
+                            <c:choose>
+                                <c:when test="${not empty comic.coverPath}">
+                                    <img src="${pageContext.request.contextPath}${comic.coverPath}" style="width: 100%; height: 200px; object-fit: cover; display: block;" alt="${comic.title}">
+                                </c:when>
+                                <c:otherwise>
+                                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📚</div>
+                                </c:otherwise>
+                            </c:choose>
+                            <h3 style="padding: 0 1.5rem; margin-top: 1rem;"><c:out value="${comic.title}" /></h3> 1rem;"><c:out value="${comic.title}" /></h3>
+                            <p style="padding: 0 1.5rem;"><c:out value="${comic.description}" default="No description available." /></p>
+                            <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; padding: 0 1.5rem 1.5rem;">
                                 <span style="font-size: 0.85rem; color: #888;">
                                     <c:out value="${comic.views}" default="0"/> views
                                 </span>

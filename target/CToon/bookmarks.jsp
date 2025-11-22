@@ -32,11 +32,16 @@
                 </p>
                 <div class="cards-grid">
                     <c:forEach items="${bookmarkedComics}" var="comic" varStatus="status">
-                        <div class="card">
-                            <div style="background: linear-gradient(135deg, #e94560 0%, #ff6b9d 100%); height: 120px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
-                                ❤️
-                            </div>
-                            <h3><c:out value="${comic.title}"/></h3>
+                        <div class="card" style="padding: 0; overflow: hidden;">
+                            <c:choose>
+                                <c:when test="${not empty comic.coverPath}">
+                                    <img src="${pageContext.request.contextPath}${comic.coverPath}" style="width: 100%; height: 200px; object-fit: cover; display: block;" alt="${comic.title}">
+                                </c:when>
+                                <c:otherwise>
+                                    <div style="background: linear-gradient(135deg, #e94560 0%, #ff6b9d 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">❤️</div>
+                                </c:otherwise>
+                            </c:choose>
+                            <h3 style="padding: 0 1.5rem; margin-top: 1rem;"><c:out value="${comic.title}"/></h3>
                             <p><c:out value="${comic.description}"/></p>
                             <div style="margin-top: 1rem;">
                                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.5rem;">

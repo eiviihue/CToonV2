@@ -48,10 +48,10 @@
                     <h3>Quick Links</h3>
                     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                         <a href="${pageContext.request.contextPath}/bookmarks" class="btn" style="display: block; text-align: center;">
-                            ❤️ View My Bookmarks
+                            View My Bookmarks
                         </a>
                         <a href="${pageContext.request.contextPath}/browse" class="btn btn-secondary" style="display: block; text-align: center;">
-                            📚 Browse Comics
+                            Browse Comics
                         </a>
                     </div>
                 </div>

@@ -59,31 +59,27 @@
             <c:choose>
                 <c:when test="${not empty comics}">
                     <c:forEach items="${comics}" var="comic" varStatus="status">
-                        <div class="card">
-                            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold;">
-                                <c:choose>
-                                    <c:when test="${not empty comic.genres}">
-                                        <c:forEach items="${comic.genres}" var="genre" varStatus="gs">
-                                            <c:if test="${gs.first}">
-                                                <c:out value="${genre.name}"/>
-                                            </c:if>
-                                        </c:forEach>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span>Unknown</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <h3><c:out value="${comic.title}"/></h3>
-                            <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #888;">
+                        <div class="card" style="padding: 0; overflow: hidden;">
+                            <c:choose>
+                                <c:when test="${not empty comic.coverPath}">
+                                    <img src="${pageContext.request.contextPath}${comic.coverPath}" style="width: 100%; height: 200px; object-fit: cover; display: block;" alt="${comic.title}">
+                                </c:when>
+                                <c:otherwise>
+                                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📚</div>
+                                </c:otherwise>
+                            </c:choose>
+                            <h3 style="padding: 0 1.5rem; margin-top: 1rem;"><c:out value="${comic.title}"/></h3>
+                            <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #888; padding: 0 1.5rem;">
                                 <c:forEach items="${comic.genres}" var="genre">
                                     <span class="badge badge-primary"><c:out value="${genre.name}"/></span>
                                 </c:forEach>
                                 <span style="float: right;"><c:out value="${comic.averageRating}"/>/5</span>
                             </p>
-                            <p><c:out value="${comic.description}"/></p>
-                            <p style="font-size: 0.85rem; color: #aaa; margin: 0.5rem 0;"><c:out value="${comic.views}"/> views</p>
-                            <a href="${pageContext.request.contextPath}/comic-detail?id=${comic.id}" class="btn" style="display: inline-block; width: auto;">View</a>
+                            <p style="padding: 0 1.5rem;"><c:out value="${comic.description}"/></p>
+                            <p style="font-size: 0.85rem; color: #aaa; margin: 0.5rem 0; padding: 0 1.5rem;"><c:out value="${comic.views}"/> views</p>
+                            <div style="padding: 0 1.5rem 1.5rem;">
+                                <a href="${pageContext.request.contextPath}/comic-detail?id=${comic.id}" class="btn" style="display: inline-block; width: auto;">View</a>
+                            </div>
                         </div>
                     </c:forEach>
                 </c:when>

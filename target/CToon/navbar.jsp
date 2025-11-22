@@ -1,7 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav>
     <a href="${pageContext.request.contextPath}/" class="logo">CToon</a>
-    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">☰</button>
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
     <ul class="nav-links" id="navLinks">
         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/browse">Browse</a></li>
@@ -10,27 +16,27 @@
             <form action="${pageContext.request.contextPath}/search" method="get" style="width: 100%; margin: 0; padding: 0; background: transparent; box-shadow: none;">
                 <div style="position: relative; display: flex; align-items: center; width: 100%;">
                     <input type="text" name="q" placeholder="Search comics..." style="padding: 0.6rem 1rem; border-radius: 20px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; width: 100%; transition: all 0.3s ease; backdrop-filter: blur(10px);" />
-                    <button type="submit" style="position: absolute; right: 8px; background: transparent; border: none; color: rgba(255,255,255,0.8); cursor: pointer; padding: 0.3rem 0.6rem; font-size: 0.9rem;">🔍</button>
+                    <button type="submit" style="position: absolute; right: 8px; background: transparent; border: none; color: rgba(255,255,255,0.8); cursor: pointer; padding: 0.3rem 0.6rem; font-size: 0.9rem;"></button>
                 </div>
             </form>
         </li>
         <c:choose>
             <c:when test="${not empty sessionScope.user}">
-                <li><a href="${pageContext.request.contextPath}/bookmarks" class="btn">Bookmarks</a></li>
-                <li><a href="${pageContext.request.contextPath}/profile" class="btn">${sessionScope.user.username}</a></li>
+                <li><a href="${pageContext.request.contextPath}/bookmarks">Bookmarks</a></li>
+                <li><a href="${pageContext.request.contextPath}/profile">${sessionScope.user.username}</a></li>
                 <li>
                     <form method="get" action="${pageContext.request.contextPath}/logout" style="margin: 0; padding: 0; background: transparent; box-shadow: none;">
-                        <button type="submit" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5);">Sign Out</button>
+                        <button type="submit" class="btn" style="cursor: pointer;">Sign Out</button>
                     </form>
                 </li>
             </c:when>
             <c:otherwise>
                 <li><a href="${pageContext.request.contextPath}/login.jsp" class="btn">Login</a></li>
-                <li><a href="${pageContext.request.contextPath}/signup.jsp" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5);">Sign Up</a></li>
+                <li><a href="${pageContext.request.contextPath}/signup.jsp" class="btn">Sign Up</a></li>
             </c:otherwise>
         </c:choose>
         <li>
-            <button id="theme-toggle" title="Toggle theme" class="btn" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.4);">
+            <button id="theme-toggle" title="Toggle theme" class="btn" style="cursor: pointer;">
                 <span id="theme-icon">🌙</span>&nbsp;<span id="theme-text">Dark</span>
             </button>
         </li>
