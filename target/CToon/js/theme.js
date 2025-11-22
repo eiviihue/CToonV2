@@ -6,13 +6,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const toggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+    
     if (toggle) {
-        toggle.textContent = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        // Set initial state
+        if (savedTheme === 'dark') {
+            if (themeIcon) themeIcon.textContent = '☀️';
+            if (themeText) themeText.textContent = 'Light';
+        } else {
+            if (themeIcon) themeIcon.textContent = '🌙';
+            if (themeText) themeText.textContent = 'Dark';
+        }
+        
         toggle.addEventListener('click', function() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            toggle.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+            
+            if (themeIcon && themeText) {
+                themeIcon.textContent = isDark ? '☀️' : '🌙';
+                themeText.textContent = isDark ? 'Light' : 'Dark';
+            }
         });
     }
 });

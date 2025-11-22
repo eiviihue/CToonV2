@@ -15,7 +15,7 @@
     <main>
         <h2>My Profile</h2>
 
-        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; margin: 2rem 0;">
+        <div class="profile-grid">
             <div class="card" style="text-align: center;">
                 <div style="font-size: 4rem; margin-bottom: 1rem;">👤</div>
                 <h3>

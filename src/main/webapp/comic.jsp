@@ -13,7 +13,7 @@
     <%@ include file="navbar.jsp" %>
     
     <main>
-        <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem; margin: 2rem 0;">
+        <div class="comic-detail-grid">
                 <div class="card">
                     <div style="font-size: 8rem; background: #667eea; color: white; padding: 2rem; border-radius: 12px; margin-bottom: 1rem;">
                         <c:choose>
@@ -31,19 +31,19 @@
                     </div>
                     <p style="color: #666;">Author: <c:out default="Unknown" value="${comic.author}"/></p>
                     <p style="margin: 1rem 0;">⭐<strong><c:out value="${avgRating}" default="0.00"/></strong>/5</p>
-                    <div style="display: flex; gap: 0.5rem;">
+                    <div class="btn-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <form method="post" action="${pageContext.request.contextPath}/bookmark" style="flex:1;">
+                                <form method="post" action="${pageContext.request.contextPath}/bookmark" style="flex:1; min-width: 140px; margin: 0; padding: 0; background: transparent; box-shadow: none;">
                                     <input type="hidden" name="comicId" value="${comic.id}" />
                                     <button class="btn" type="submit" style="width:100%;">❤️ Bookmark</button>
                                 </form>
                             </c:when>
                             <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/login.jsp" class="btn" style="flex:1; display:inline-block; text-align:center;">Log in to Bookmark</a>
+                                <a href="${pageContext.request.contextPath}/login.jsp" class="btn" style="flex:1; min-width: 140px; display:inline-block; text-align:center;">Log in to Bookmark</a>
                             </c:otherwise>
                         </c:choose>
-                        <button class="btn btn-secondary" style="flex: 1;">⭐ Rate</button>
+                        <button class="btn btn-secondary" style="flex: 1; min-width: 100px;">⭐ Rate</button>
                     </div>
                 </div>
             
@@ -145,7 +145,5 @@
             </div>
         </div>
     </main>
-    
-    <!-- theme toggle moved to navbar -->
 </body>
 </html>

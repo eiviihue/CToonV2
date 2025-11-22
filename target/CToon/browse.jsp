@@ -32,8 +32,8 @@
     <main>
         <h2>Browse Comics</h2>
         
-        <div style="margin: 2rem 0; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between; align-items: center;">
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <div class="browse-filters">
+            <div class="filter-group">
                 <select style="padding: 0.8rem; border-radius: 8px; border: 2px solid #667eea; background: white; cursor: pointer; font-weight: 500;">
                     <option>All Categories</option>
                     <option>Action</option>
@@ -95,7 +95,5 @@
             </c:choose>
         </div>
     </main>
-    
-    <!-- theme toggle moved to navbar -->
 </body>
 </html>

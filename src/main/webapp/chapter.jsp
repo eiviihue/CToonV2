@@ -8,6 +8,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${comic.title} - Chapter ${chapter.number}</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <script src="${pageContext.request.contextPath}/js/theme.js"></script>
+    <style>
+        .chapter-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        .chapter-header h1 {
+            margin-bottom: 10px;
+        }
+
+        .chapter-header h2 {
+            margin-bottom: 5px;
+        }
+
+        .chapter-meta {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .chapter-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .chapter-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: transparent;
+            color: #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .chapter-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .chapter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .chapter-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pages-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .page-item {
+            width: 100%;
+        }
+
+        .page-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-pages {
+            text-align: center;
+            padding: 40px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            color: #666;
+        }
+
+        body.dark-mode .no-pages {
+            background: #2a2a3e;
+            color: #e0e0e0;
+        }
+
+        .comments-section {
+            margin-top: 60px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        body.dark-mode .comments-section {
+            background: #2a2a3e;
+        }
+
+        .comments-section h3 {
+            margin-bottom: 20px;
+        }
+
+        .comments-list {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .chapter-container {
+                margin: 20px auto;
+                padding: 0 10px;
+            }
+
+            .chapter-nav {
+                gap: 5px;
+            }
+
+            .chapter-btn {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
@@ -77,13 +205,14 @@
                 </c:forEach>
             </c:if>
 
-            <div style="text-align: center; margin: 3rem 0; display: flex; gap: 1rem; justify-content: center;">
+            <!-- Navigation buttons -->
+            <div class="btn-group" style="text-align: center; margin: 3rem 0; justify-content: center;">
                 <c:choose>
                     <c:when test="${not empty prevChapter}">
-                        <a href="${pageContext.request.contextPath}/chapter?id=${prevChapter.id}" class="btn btn-secondary">← Previous Chapter</a>
+                        <a href="${pageContext.request.contextPath}/chapter?id=${prevChapter.id}" class="btn btn-secondary">← Previous</a>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-secondary" disabled>← Previous Chapter</button>
+                        <button class="btn btn-secondary" disabled style="opacity: 0.5; cursor: not-allowed;">← Previous</button>
                     </c:otherwise>
                 </c:choose>
 
@@ -91,171 +220,13 @@
 
                 <c:choose>
                     <c:when test="${not empty nextChapter}">
-                        <a href="${pageContext.request.contextPath}/chapter?id=${nextChapter.id}" class="btn">Next Chapter →</a>
+                        <a href="${pageContext.request.contextPath}/chapter?id=${nextChapter.id}" class="btn">Next →</a>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn" disabled>Next Chapter →</button>
+                        <button class="btn" disabled style="opacity: 0.5; cursor: not-allowed;">Next →</button>
                     </c:otherwise>
                 </c:choose>
             </div>
-        </main>
-    
-        <!-- theme toggle moved to navbar -->
+        </div>
     </body>
     </html>
-    </div>
-
-    <style>
-        .chapter-container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .chapter-header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px;
-        }
-
-        .chapter-header h1 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .chapter-header h2 {
-            color: var(--text-color);
-            margin-bottom: 5px;
-        }
-
-        .chapter-meta {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-        }
-
-        .chapter-nav {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .chapter-btn {
-            padding: 8px 16px;
-            border: 2px solid var(--primary-color);
-            background: transparent;
-            color: var(--primary-color);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .chapter-btn:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .chapter-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .pages-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .page-item {
-            width: 100%;
-        }
-
-        .page-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .no-pages {
-            text-align: center;
-            padding: 40px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            color: var(--text-secondary);
-        }
-
-        .comments-section {
-            margin-top: 60px;
-            padding: 20px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-        }
-
-        .comments-section h3 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .comments-list {
-            margin-top: 20px;
-        }
-
-        /* Dark mode support */
-        .dark-mode .chapter-container {
-            color: var(--text-color);
-        }
-
-        @media (max-width: 768px) {
-            .chapter-container {
-                margin: 20px auto;
-            }
-
-            .chapter-nav {
-                gap: 5px;
-            }
-
-            .chapter-btn {
-                padding: 6px 12px;
-                font-size: 0.9em;
-            }
-        }
-    </style>
-
-    <script src="${pageContext.request.contextPath}/js/theme.js"></script>
-</body>
-</html>
-                <div style="margin-bottom: 1.5rem;">
-                    <strong>ComicFan99</strong> <span style="color: #999; font-size: 0.9rem;">1 day ago</span>
-                    <p>Wow! That plot twist was insane! Can't wait for the next chapter!</p>
-                </div>
-                <div style="margin-bottom: 1.5rem;">
-                    <strong>MangaReader</strong> <span style="color: #999; font-size: 0.9rem;">2 days ago</span>
-                    <p>The art in this chapter is absolutely stunning. The action sequences are perfectly drawn!</p>
-                </div>
-                <div>
-                    <strong>StoryLover</strong> <span style="color: #999; font-size: 0.9rem;">3 days ago</span>
-                    <p>This is becoming my favorite manga! The character development is amazing!</p>
-                </div>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin: 3rem 0; display: flex; gap: 1rem; justify-content: center;">
-            <button class="btn btn-secondary">← Previous Chapter</button>
-            <a href="${pageContext.request.contextPath}/comic.jsp" class="btn">Back to Comic</a>
-            <button class="btn">Next Chapter →</button>
-        </div>
-    </main>
-    
-    <footer>
-    <footer>
-        <button id="theme-toggle">Dark Mode</button>
-    </footer>
-    </footer>
-</body>
-</html>
