@@ -61,7 +61,18 @@
                     <c:forEach items="${comics}" var="comic" varStatus="status">
                         <div class="card">
                             <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 100px; border-radius: 8px; margin: -1.5rem -1.5rem 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: bold;">
-                                <c:out value="${comic.category}"/>
+                                <c:choose>
+                                    <c:when test="${not empty comic.genres}">
+                                        <c:forEach items="${comic.genres}" var="genre" varStatus="gs">
+                                            <c:if test="${gs.first}">
+                                                <c:out value="${genre.name}"/>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span>Unknown</span>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                             <h3><c:out value="${comic.title}"/></h3>
                             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #888;">

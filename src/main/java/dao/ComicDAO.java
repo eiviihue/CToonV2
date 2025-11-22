@@ -49,9 +49,10 @@ public class ComicDAO {
                 comic.setTitle(rs.getString("title"));
                 comic.setDescription(rs.getString("description"));
                 comic.setCoverPath(rs.getString("cover_path"));
-                comic.setCategory(rs.getString("category"));
                 comic.setAverageRating(rs.getDouble("average_rating"));
                 comic.setViews(rs.getInt("views"));
+                // load genres from comics_genres junction table
+                loadGenresForComic(comic);
                 return comic;
             }
         } catch (SQLException e) {
@@ -73,7 +74,6 @@ public class ComicDAO {
                 comic.setTitle(rs.getString("title"));
                 comic.setDescription(rs.getString("description"));
                 comic.setCoverPath(rs.getString("cover_path"));
-                comic.setCategory(rs.getString("category"));
                 comic.setAverageRating(rs.getDouble("average_rating"));
                 comic.setViews(rs.getInt("views"));
                 loadGenresForComic(comic);
@@ -99,9 +99,9 @@ public class ComicDAO {
                 comic.setTitle(rs.getString("title"));
                 comic.setDescription(rs.getString("description"));
                 comic.setCoverPath(rs.getString("cover_path"));
-                comic.setCategory(rs.getString("category"));
                 comic.setAverageRating(rs.getDouble("average_rating"));
                 comic.setViews(rs.getInt("views"));
+                loadGenresForComic(comic);
                 comics.add(comic);
             }
             System.out.println("Successfully fetched " + comics.size() + " recent comics");
@@ -124,9 +124,9 @@ public class ComicDAO {
                 comic.setTitle(rs.getString("title"));
                 comic.setDescription(rs.getString("description"));
                 comic.setCoverPath(rs.getString("cover_path"));
-                comic.setCategory(rs.getString("category"));
                 comic.setAverageRating(rs.getDouble("average_rating"));
                 comic.setViews(rs.getInt("views"));
+                loadGenresForComic(comic);
                 comics.add(comic);
             }
             System.out.println("Successfully fetched " + comics.size() + " trending comics");
@@ -151,9 +151,9 @@ public class ComicDAO {
                 comic.setTitle(rs.getString("title"));
                 comic.setDescription(rs.getString("description"));
                 comic.setCoverPath(rs.getString("cover_path"));
-                comic.setCategory(rs.getString("category"));
                 comic.setAverageRating(rs.getDouble("average_rating"));
                 comic.setViews(rs.getInt("views"));
+                loadGenresForComic(comic);
                 return comic;
             }
         } catch (SQLException e) {
@@ -178,9 +178,9 @@ public class ComicDAO {
                 comic.setTitle(rs.getString("title"));
                 comic.setDescription(rs.getString("description"));
                 comic.setCoverPath(rs.getString("cover_path"));
-                comic.setCategory(rs.getString("category"));
                 comic.setAverageRating(rs.getDouble("average_rating"));
                 comic.setViews(rs.getInt("views"));
+                loadGenresForComic(comic);
                 comics.add(comic);
             }
             System.out.println("Successfully found " + comics.size() + " comics matching '" + q + "'");

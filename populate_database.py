@@ -130,9 +130,9 @@ class CToonDBAutomation:
                 print(f"  ✓ Comic '{title}' exists (ID: {comic_id})")
                 return comic_id
             else:
-                # Insert new comic (category is deprecated, use genres instead)
-                query = "INSERT INTO comics (title, description, cover_path, category, average_rating, views) VALUES (%s, %s, %s, %s, %s, %s)"
-                self.cursor.execute(query, (title, description, cover_path, genres[0] if genres else 'Manga', 0.0, 0))
+                # Insert new comic (no category column anymore)
+                query = "INSERT INTO comics (title, description, cover_path, average_rating, views) VALUES (%s, %s, %s, %s, %s)"
+                self.cursor.execute(query, (title, description, cover_path, 0.0, 0))
                 self.conn.commit()
                 comic_id = self.cursor.lastrowid
                 print(f"  ✓ Comic '{title}' created (ID: {comic_id})")
@@ -279,11 +279,11 @@ class CToonDBAutomation:
             
             # List comics
             print("\n📚 Comics:")
-            self.cursor.execute("SELECT id, title, category FROM comics")
+            self.cursor.execute("SELECT id, title FROM comics")
             for comic in self.cursor.fetchall():
                 self.cursor.execute("SELECT COUNT(*) as count FROM chapters WHERE comic_id = %s", (comic['id'],))
                 chapters = self.cursor.fetchone()['count']
-                print(f"  - {comic['title']} ({comic['category']}) - {chapters} chapters")
+                print(f"  - {comic['title']} - {chapters} chapters")
         
         except mysql.connector.Error as err:
             print(f"✗ Error: {err}")
