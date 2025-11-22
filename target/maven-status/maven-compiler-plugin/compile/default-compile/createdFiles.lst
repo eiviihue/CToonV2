@@ -22,6 +22,7 @@ dao\CommentDAO.class
 util\StartupListener.class
 controller\ComicDetailController.class
 dao\BookmarkDAO.class
+controller\SearchController.class
 controller\LogoutServlet.class
 model\Chapter.class
 model\Rating.class

@@ -35,41 +35,6 @@
             font-size: 0.9em;
         }
 
-        .chapter-nav {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .chapter-btn {
-            padding: 8px 16px;
-            border: 2px solid #667eea;
-            background: transparent;
-            color: #667eea;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .chapter-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .chapter-btn.active {
-            background: #667eea;
-            color: white;
-        }
-        
-        .chapter-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         .pages-container {
             display: flex;
             flex-direction: column;
@@ -125,15 +90,6 @@
                 margin: 20px auto;
                 padding: 0 10px;
             }
-
-            .chapter-nav {
-                gap: 5px;
-            }
-
-            .chapter-btn {
-                padding: 6px 12px;
-                font-size: 0.9em;
-            }
         }
     </style>
 </head>
@@ -145,22 +101,6 @@
             <h1>${comic.title}</h1>
             <h2>Chapter ${chapter.number}: ${chapter.title}</h2>
             <p class="chapter-meta">By ${comic.author}</p>
-        </div>
-
-        <!-- Chapter Navigation -->
-        <div class="chapter-nav">
-            <c:forEach items="${chapters}" var="ch">
-                <c:choose>
-                    <c:when test="${ch.id == chapter.id}">
-                        <button class="chapter-btn active">Chapter ${ch.number}</button>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/chapter?id=${ch.id}" class="chapter-btn">
-                            Chapter ${ch.number}
-                        </a>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
         </div>
 
         <!-- Pages Display -->

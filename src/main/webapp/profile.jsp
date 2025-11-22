@@ -25,10 +25,12 @@
                     </c:choose>
                 </h3>
                 <p style="color: #667eea; font-weight: 600;">@<c:out value="${sessionScope.user.username}" default="guest"/></p>
-                <p>
+                <p style="color: #666;">
                     <c:choose>
-                        <c:when test="${not empty sessionScope.user && not empty sessionScope.user.createdAt}">Member since: ${sessionScope.user.createdAt}</c:when>
-                        <c:otherwise>Member since: —</c:otherwise>
+                        <c:when test="${not empty sessionScope.user}">
+                            <c:out value="${sessionScope.user.email}" default="No email provided"/>
+                        </c:when>
+                        <c:otherwise>Guest User</c:otherwise>
                     </c:choose>
                 </p>
                 <c:if test="${not empty sessionScope.user}">
