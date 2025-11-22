@@ -66,7 +66,7 @@
                                 <c:forEach items="${chapters}" var="chapter">
                                     <li style="padding: 0.8rem; border-bottom: 1px solid #e0e0e0;">
                                         <a href="${pageContext.request.contextPath}/chapter?id=${chapter.id}">
-                                            Chapter ${chapter.number} - ${chapter.title}
+                                            ${chapter.title}
                                         </a>
                                     </li>
                                 </c:forEach>
