@@ -23,6 +23,21 @@
         .form-action button {
             flex: 1;
         }
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .alert-error {
+            background-color: #fee;
+            border-left: 4px solid #f33;
+            color: #933;
+        }
+        .alert-success {
+            background-color: #efe;
+            border-left: 4px solid #3f3;
+            color: #393;
+        }
     </style>
 </head>
 <body>
@@ -31,6 +46,21 @@
     <main>
         <h2>🔐 Login to CToon</h2>
         <p style="text-align: center; color: #666; margin-bottom: 2rem;">Welcome back! Please login to your account</p>
+        
+        <% 
+            String error = (String) request.getAttribute("error");
+            String message = (String) request.getAttribute("message");
+            if (error != null) {
+        %>
+            <div class="alert alert-error"><%= error %></div>
+        <% 
+            }
+            if (message != null) {
+        %>
+            <div class="alert alert-success"><%= message %></div>
+        <% 
+            }
+        %>
         
         <form action="${pageContext.request.contextPath}/LoginServlet" method="post">
             <input type="hidden" name="action" value="login" />

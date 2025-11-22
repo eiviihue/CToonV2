@@ -1,5 +1,6 @@
 dao\ChapterDAO.class
 controller\HomeController.class
+controller\LoginServlet.class
 dao\RatingDAO.class
 model\Page.class
 controller\UserController.class

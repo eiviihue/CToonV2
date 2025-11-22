@@ -66,8 +66,10 @@ public class ComicDAO {
                 comic.setViews(rs.getInt("views"));
                 comics.add(comic);
             }
+            System.out.println("Successfully fetched " + comics.size() + " comics from database");
         } catch (SQLException e) {
             System.err.println("Error fetching all comics: " + e.getMessage());
+            e.printStackTrace();
         }
         return comics;
     }

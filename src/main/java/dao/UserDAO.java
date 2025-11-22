@@ -93,6 +93,27 @@ public class UserDAO {
         }
     }
 
+    public User getUserByUsername(String username) {
+        try {
+            String query = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                return user;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching user by username: " + e.getMessage());
+        }
+        return null;
+    }
+
     public void delete(int userId) {
         try {
             String query = "DELETE FROM users WHERE id = ?";
