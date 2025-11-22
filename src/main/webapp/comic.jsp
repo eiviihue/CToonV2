@@ -30,7 +30,7 @@
                         </span>
                     </div>
                     <p style="color: #666;">Author: <c:out default="Unknown" value="${comic.author}"/></p>
-                    <p style="margin: 1rem 0;">⭐<strong><c:out value="${avgRating}" default="0.00"/></strong>/5</p>
+                    <p style="margin: 1rem 0;">⭐<strong><c:out value="${comic.averageRating}" default="0.00"/></strong>/5</p>
                     <div class="btn-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
@@ -53,6 +53,20 @@
                     <p><strong>Status:</strong> Ongoing</p>
                     <p><strong>Views:</strong> <c:out default="0" value="${comic.views}"/></p>
                     <p><strong>Chapters:</strong> 45</p>
+                    
+                    <c:if test="${not empty comic.genres}">
+                        <div style="margin: 1rem 0;">
+                            <strong>Genres:</strong>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+                                <c:forEach items="${comic.genres}" var="genre">
+                                    <span class="badge badge-primary">
+                                        <c:out value="${genre.name}"/>
+                                    </span>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    
                     <p style="margin-top: 1rem; line-height: 1.8;">
                         <c:out default="This is an exciting comic with amazing storytelling and beautiful artwork." value="${comic.description}"/>
                     </p>
@@ -83,14 +97,32 @@
                     <c:choose>
                         <c:when test="${not empty comments}">
                             <c:forEach items="${comments}" var="comment">
-                                <div style="margin-bottom:1.2rem;">
-                                    <strong>User</strong> <span style="color:#999; font-size:0.9rem;">${comment.createdAt}</span>
-                                    <p style="margin-top:0.4rem;">${comment.content}</p>
+                                <div style="margin-bottom:1.2rem; padding-bottom:1rem; border-bottom:1px solid #e0e0e0;">
+                                    <strong><c:out value="${comment.username}" default="User"/></strong> 
+                                    <span style="color:#999; font-size:0.9rem;">${comment.createdAt}</span>
+                                    <p style="margin-top:0.4rem;"><c:out value="${comment.content}"/></p>
                                 </div>
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <p>No comments available yet.</p>
+                            <p>No comments yet. Be the first to comment!</p>
+                        </c:otherwise>
+                    </c:choose>
+                    
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.user}">
+                            <form method="post" action="${pageContext.request.contextPath}/comic-detail" style="margin-top:1.5rem;">
+                                <input type="hidden" name="action" value="addComment" />
+                                <input type="hidden" name="comicId" value="${comic.id}" />
+                                <label for="comment-content">Add a comment:</label>
+                                <textarea name="content" id="comment-content" rows="4" 
+                                    style="display:block; width:100%; margin:0.5rem 0 1rem; padding:0.8rem; border-radius:8px; border:1px solid #ddd; font-family:inherit;"
+                                    placeholder="Share your thoughts about this comic..." required></textarea>
+                                <button class="btn" type="submit">Post Comment</button>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <p style="margin-top:1.5rem;">Please <a href="${pageContext.request.contextPath}/login.jsp">login</a> to comment.</p>
                         </c:otherwise>
                     </c:choose>
                 </div>

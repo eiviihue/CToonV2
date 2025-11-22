@@ -55,22 +55,6 @@
                         </a>
                     </div>
                 </div>
-
-                <div class="card">
-                    <h3>📖 Reading History</h3>
-                    <c:choose>
-                        <c:when test="${not empty requestScope.history}">
-                            <ul style="list-style: none;">
-                                <c:forEach var="entry" items="${requestScope.history}">
-                                    <li style="padding: 0.5rem 0;"><a href="${pageContext.request.contextPath}/comic-detail?id=${entry.comicId}">${entry.title}</a> - Last read ${entry.lastRead}</li>
-                                </c:forEach>
-                            </ul>
-                        </c:when>
-                        <c:otherwise>
-                            <p>No reading history yet. Start reading some comics!</p>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
             </div>
         </div>
     </main>

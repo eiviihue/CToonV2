@@ -4,6 +4,7 @@ public class Comment {
     private int id;
     private int userId;
     private Integer chapterId; // null for comic comments
+    private Integer comicId; // null for chapter comments
     private String content;
     private String createdAt;
     private String username; // denormalized username for display
@@ -30,6 +31,14 @@ public class Comment {
 
     public void setChapterId(Integer chapterId) {
         this.chapterId = chapterId;
+    }
+
+    public Integer getComicId() {
+        return comicId;
+    }
+
+    public void setComicId(Integer comicId) {
+        this.comicId = comicId;
     }
 
     public String getContent() {

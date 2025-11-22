@@ -190,4 +190,19 @@ public class ComicDAO {
         }
         return comics;
     }
+
+    public void incrementViews(int comicId) {
+        try {
+            String query = "UPDATE comics SET views = views + 1 WHERE id = ?";
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+            stmt.setInt(1, comicId);
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Incremented views for comic ID: " + comicId);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error incrementing views: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

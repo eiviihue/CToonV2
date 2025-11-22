@@ -30,6 +30,9 @@ public class ComicDetailController extends HttpServlet {
                 Comic comic = comicDAO.getComicById(comicId);
 
                 if (comic != null) {
+                    // Increment view count
+                    comicDAO.incrementViews(comicId);
+
                     request.setAttribute("comic", comic);
 
                     // Get chapters for this comic
@@ -99,14 +102,14 @@ public class ComicDetailController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/login.jsp?error=Please+login+to+comment");
                 return;
             }
-            String chapterIdStr = request.getParameter("chapterId");
+            String comicIdStr = request.getParameter("comicId");
             String content = request.getParameter("content");
             try {
-                int chapterId = Integer.parseInt(chapterIdStr);
+                int comicId = Integer.parseInt(comicIdStr);
                 dao.CommentDAO commentDAO = new dao.CommentDAO();
                 model.Comment comment = new model.Comment();
                 comment.setUserId(user.getId());
-                comment.setChapterId(chapterId);
+                comment.setComicId(comicId);
                 comment.setContent(content);
                 commentDAO.addComment(comment);
             } catch (NumberFormatException e) {

@@ -103,6 +103,44 @@
             <p class="chapter-meta">By ${comic.author}</p>
         </div>
 
+        <c:set var="prevChapter" value="" />
+        <c:set var="nextChapter" value="" />
+        <c:if test="${not empty chapters}">
+            <c:forEach items="${chapters}" var="ch" varStatus="st">
+                <c:if test="${ch.id == chapter.id}">
+                    <c:if test="${st.index > 0}">
+                        <c:set var="prevChapter" value="${chapters[st.index - 1]}" />
+                    </c:if>
+                    <c:if test="${st.index lt fn:length(chapters) - 1}">
+                        <c:set var="nextChapter" value="${chapters[st.index + 1]}" />
+                    </c:if>
+                </c:if>
+            </c:forEach>
+        </c:if>
+
+        <!-- Navigation buttons (Top) -->
+        <div class="btn-group" style="text-align: center; margin: 0 0 2rem 0; justify-content: center;">
+            <c:choose>
+                <c:when test="${not empty prevChapter}">
+                    <a href="${pageContext.request.contextPath}/chapter?id=${prevChapter.id}" class="btn btn-secondary">← Previous</a>
+                </c:when>
+                <c:otherwise>
+                    <button class="btn btn-secondary" disabled style="opacity: 0.5; cursor: not-allowed;">← Previous</button>
+                </c:otherwise>
+            </c:choose>
+
+            <a href="${pageContext.request.contextPath}/comic-detail?id=${comic.id}" class="btn">Back to Comic</a>
+
+            <c:choose>
+                <c:when test="${not empty nextChapter}">
+                    <a href="${pageContext.request.contextPath}/chapter?id=${nextChapter.id}" class="btn">Next →</a>
+                </c:when>
+                <c:otherwise>
+                    <button class="btn" disabled style="opacity: 0.5; cursor: not-allowed;">Next →</button>
+                </c:otherwise>
+            </c:choose>
+        </div>
+
         <!-- Pages Display -->
         <div class="pages-container">
             <c:choose>
@@ -125,27 +163,43 @@
 
         <!-- Comments Section -->
         <div class="comments-section">
-            <h3>Comments</h3>
+            <h3>💬 Comments</h3>
             <div class="comments-list">
-                <p>No comments available. Be the first to read this chapter!</p>
+                <c:choose>
+                    <c:when test="${not empty comments}">
+                        <c:forEach items="${comments}" var="comment">
+                            <div style="margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid #ddd;">
+                                <strong><c:out value="${comment.username}" default="User"/></strong> 
+                                <span style="color:#999; font-size:0.9rem; margin-left:0.5rem;">${comment.createdAt}</span>
+                                <p style="margin-top:0.6rem; line-height:1.6;"><c:out value="${comment.content}"/></p>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p style="color:#666;">No comments yet. Be the first to comment on this chapter!</p>
+                    </c:otherwise>
+                </c:choose>
             </div>
+            
+            <c:choose>
+                <c:when test="${not empty sessionScope.user}">
+                    <form method="post" action="${pageContext.request.contextPath}/chapter" style="margin-top:2rem;">
+                        <input type="hidden" name="action" value="addComment" />
+                        <input type="hidden" name="chapterId" value="${chapter.id}" />
+                        <label for="comment-content" style="display:block; margin-bottom:0.5rem; font-weight:600;">Add your comment:</label>
+                        <textarea name="content" id="comment-content" rows="4" 
+                            style="display:block; width:100%; padding:0.8rem; border-radius:8px; border:1px solid #ddd; font-family:inherit; resize:vertical;"
+                            placeholder="What did you think of this chapter?" required></textarea>
+                        <button class="btn" type="submit" style="margin-top:1rem;">Post Comment</button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <p style="margin-top:2rem; color:#666;">Please <a href="${pageContext.request.contextPath}/login.jsp" style="color:#667eea;">login</a> to comment.</p>
+                </c:otherwise>
+            </c:choose>
         </div>
-            <c:set var="prevChapter" value="" />
-            <c:set var="nextChapter" value="" />
-            <c:if test="${not empty chapters}">
-                <c:forEach items="${chapters}" var="ch" varStatus="st">
-                    <c:if test="${ch.id == chapter.id}">
-                        <c:if test="${st.index > 0}">
-                            <c:set var="prevChapter" value="${chapters[st.index - 1]}" />
-                        </c:if>
-                        <c:if test="${st.index lt fn:length(chapters) - 1}">
-                            <c:set var="nextChapter" value="${chapters[st.index + 1]}" />
-                        </c:if>
-                    </c:if>
-                </c:forEach>
-            </c:if>
 
-            <!-- Navigation buttons -->
+            <!-- Navigation buttons (Bottom) -->
             <div class="btn-group" style="text-align: center; margin: 3rem 0; justify-content: center;">
                 <c:choose>
                     <c:when test="${not empty prevChapter}">
