@@ -16,8 +16,8 @@
         </li>
         <c:choose>
             <c:when test="${not empty sessionScope.user}">
-                <li><a href="${pageContext.request.contextPath}/profile.jsp#bookmarks" class="btn">Bookmarks</a></li>
-                <li><a href="${pageContext.request.contextPath}/profile.jsp" class="btn">${sessionScope.user.username}</a></li>
+                <li><a href="${pageContext.request.contextPath}/bookmarks" class="btn">Bookmarks</a></li>
+                <li><a href="${pageContext.request.contextPath}/profile" class="btn">${sessionScope.user.username}</a></li>
                 <li>
                     <form method="get" action="${pageContext.request.contextPath}/logout" style="margin: 0; padding: 0; background: transparent; box-shadow: none;">
                         <button type="submit" class="btn" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5);">Sign Out</button>

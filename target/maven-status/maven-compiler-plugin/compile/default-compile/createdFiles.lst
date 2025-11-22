@@ -6,6 +6,7 @@ util\DBUtil.class
 util\HealthServlet.class
 model\Genre.class
 model\Bookmark.class
+controller\BookmarksController.class
 model\Comic.class
 dao\UserDAO.class
 controller\BrowseController.class
